@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" 
+                    "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <script src="http://code.jquery.com/jquery-latest.js"></script>
+  <link rel="stylesheet" href="qunit-git.css" type="text/css" media="screen" />
+  <script type="text/javascript" src="qunit-git.js"></script>
+  <script type="text/javascript" src="gameOfLife.js"></script>
+
+  <script>
+  $(document).ready(function(){  
+
+  test("a dead upper left cell with three neighbors becomes alive", function() {
+    var board = [
+	[0,1,0],
+	[1,1,0],
+	[0,0,0]
+	];
+    board = nextGeneration(board);
+  equal( board[0][0], 1 );
+  });
+
+  test("a dead upper left cell with two neighbors stays dead", function() {
+    var board = [
+	[0,1,0],
+	[1,0,0],
+	[0,0,0]
+	];
+    board = nextGeneration(board);
+    equal( board[0][0], 0 );
+  });
+
+  test("a dead upper left cell with no neighbors stays dead", function() {
+    var board = [
+	[0,0,0],
+	[0,0,0],
+	[0,0,0]
+	];
+    board = nextGeneration(board);
+  equal( board[0][0], 0 );
+  });
+
+  test("a dead upper right cell with three neighbors becomes alive", function() {
+    var board = [
+	[0,1,0],
+	[0,1,1],
+	[0,0,0]
+	];
+    board = nextGeneration(board);
+  equal( board[0][2], 1 );
+  });
+
+  test("an alive upper left cell with one neighbor dies", function() {
+    var board = [
+	[1,1,0],
+	[0,0,0],
+	[0,0,0]
+	];
+    board = nextGeneration(board);
+    equal( board[0][0], 0 );
+  });
+
+  test("an alive center cell with more than three neighbors dies", function() {
+    var board = [
+	[0,1,0],
+	[1,1,1],
+	[0,1,0]
+	];
+   board = nextGeneration(board);
+  equal( board[1][1], 0 );
+  });
+
+  test("a 3x3 board with two living cells is transformed correctly", function() {
+    var board = [
+	[0,1,0],
+	[1,0,0],
+	[0,0,0]
+	];
+    board = nextGeneration(board);
+    equal( board[0][0], 0 );
+    equal( board[0][1], 0 );
+    equal( board[1][0], 0 );
+    equal( board[1][1], 0 );
+  });
+
+});
+  </script>
+  
+</head>
+<body>
+  <h1 id="qunit-header">Conways Game of Life</h1>
+ <h2 id="qunit-banner"></h2>
+ <div id="qunit-testrunner-toolbar"></div>
+ <h2 id="qunit-userAgent"></h2>
+ <ol id="qunit-tests"></ol>
+ <div id="qunit-fixture">test markup, will be hidden</div>
+</body>
+</html>
